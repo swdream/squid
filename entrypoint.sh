@@ -2,8 +2,8 @@
 
 set -e
 
-SQUID_USERNAME=${USERNAME:-squip}
-SQUID_PASSWORD=${PASSWORD:-squip}
+SQUID_USERNAME=${USERNAME:-squid}
+SQUID_PASSWORD=${PASSWORD:-squid}
 
 QUID_CONFIG_DIR=/etc/squid
 SQUID_LOG_DIR=/var/log/squid
