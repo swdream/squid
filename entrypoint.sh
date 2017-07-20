@@ -19,6 +19,10 @@ create_log_dir() {
     mkdir -p ${SQUID_LOG_DIR}
   fi
   chmod -R 755 ${SQUID_LOG_DIR}
+  # Redirect logs to stdout
+  ln -sf /dev/stdout /var/log/squid/access.log
+  ln -sf /dev/stdout /var/log/squid/cache.log
+  chown -R squid:squid /dev/stdout
   chown -R squid:squid ${SQUID_LOG_DIR}
 }
 
