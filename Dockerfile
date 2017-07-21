@@ -4,10 +4,13 @@ MAINTAINER Swdream "ngtthanh1010@gmail.com"
 ENV SQUID_CONFIG_DIR=/etc/squid
 
 RUN apk update && \
-    apk add --no-cache su-exec squid=3.5.23-r0 apache2-utils && \
+    apk add --no-cache sudo su-exec squid=3.5.23-r0 apache2-utils && \
     rm -rf /var/cache/apk/*
 
 RUN mv ${SQUID_CONFIG_DIR}/squid.conf ${SQUID_CONFIG_DIR}/squid.conf.dist
+
+RUN echo -e "Defaults:squid !requiretty" > /etc/sudoers.d/squid
+RUN echo -e "squid ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/squid
 
 COPY entrypoint.sh /
 COPY conf/squid.conf /etc/squid/squid.conf
