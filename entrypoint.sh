@@ -24,6 +24,11 @@ create_cache_dir() {
 
 create_cache_dir
 
+# /tmp/logpipe is a named pipe created by mkfifo
+# cache and access logs are configured to write to that named pipe
+# https://github.com/moby/moby/issues/6880#issuecomment-220637337
+cat <> /tmp/logpipe 2>&1 &
+
 SQUID_VERSION=$(/usr/sbin/squid -v | grep Version | awk '{ print $4 }')
 if [ "$1" == "squid" ]; then
   echo "Staring squid [${SQUID_VERSION}]"

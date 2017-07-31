@@ -9,8 +9,9 @@ RUN apk update && \
 
 RUN mv ${SQUID_CONFIG_DIR}/squid.conf ${SQUID_CONFIG_DIR}/squid.conf.dist
 
-RUN echo -e "Defaults:squid !requiretty" > /etc/sudoers.d/squid
-RUN echo -e "squid ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/squid
+# Create a named pipe and redirect anything that comes to it to stdout
+RUN mkfifo -m 600 /tmp/logpipe
+RUN chown squid:squid /tmp/logpipe
 
 COPY entrypoint.sh /
 COPY conf/squid.conf /etc/squid/squid.conf
